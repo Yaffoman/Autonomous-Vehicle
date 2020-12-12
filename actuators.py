@@ -1,7 +1,9 @@
-#!/usr/bin/env python3
+#!/usr/bin/python
 
 import utils
+import Adafruit_PCA9685
 import time
+
 class PCA9685:
     '''
     PWM motor controler using PCA9685 boards.
@@ -12,7 +14,6 @@ class PCA9685:
         self.default_freq = 60
         self.pwm_scale = frequency / self.default_freq
 
-        import Adafruit_PCA9685
         # Initialise the PCA9685 using the default address (0x40).
         if busnum is not None:
             from Adafruit_GPIO import I2C
@@ -34,13 +35,12 @@ class PCA9685:
     def run(self, pulse):
         self.set_pulse(pulse)
 
-
 class PWMSteering:
     """
     Wrapper over a PWM motor cotnroller to convert angles to PWM pulses.
     """
-    LEFT_ANGLE = -1
-    RIGHT_ANGLE = 1
+    LEFT_ANGLE = -1.
+    RIGHT_ANGLE = 1.
 
     def __init__(self, controller=None,
                        left_pulse=290,
@@ -62,14 +62,13 @@ class PWMSteering:
     def shutdown(self):
         self.run(0) #set steering straight
 
-
 class PWMThrottle:
     """
     Wrapper over a PWM motor cotnroller to convert -1 to 1 throttle
     values to PWM pulses.
     """
-    MIN_THROTTLE = -1
-    MAX_THROTTLE =  1
+    MIN_THROTTLE = -1.
+    MAX_THROTTLE =  1.
 
     def __init__(self, controller=None,
                        max_pulse=300,
@@ -89,6 +88,7 @@ class PWMThrottle:
         time.sleep(0.01)
         self.controller.set_pulse(self.zero_pulse)
         time.sleep(1)
+
 
     def run(self, throttle):
         if throttle > 0:

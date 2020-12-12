@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import cv2
 import numpy as np
 
@@ -6,7 +8,7 @@ def callback(x):
     pass
 
 
-# cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(cv2.CAP_V4L)
 
 cv2.namedWindow('sliders')
 
@@ -26,10 +28,25 @@ cv2.createTrackbar('highS', 'sliders', highS, 255, callback)
 cv2.createTrackbar('lowV', 'sliders', lowV, 255, callback)
 cv2.createTrackbar('highV', 'sliders', highV, 255, callback)
 
-while True:
-    # ret, frame = cap.read()
-    frame = cv2.imread('image.png')
+# cv2.setTrackbarPos('lowH','sliders',15)
+# cv2.setTrackbarPos('highH','sliders',50)
+# cv2.setTrackbarPos('lowS','sliders',0)
+# cv2.setTrackbarPos('highS','sliders',160)
+# cv2.setTrackbarPos('lowV','sliders',160)
+# cv2.setTrackbarPos('highV','sliders',255)
 
+cv2.setTrackbarPos('lowH','sliders',24) # TENNIS BALL
+cv2.setTrackbarPos('highH','sliders',85)
+cv2.setTrackbarPos('lowS','sliders',55)
+cv2.setTrackbarPos('highS','sliders',255)
+cv2.setTrackbarPos('lowV','sliders',50)
+cv2.setTrackbarPos('highV','sliders',255)
+
+
+while True:
+    ret, frame = cap.read()
+    #frame = cv2.imread('image.png')
+    frame = cv2.resize(frame,(160,120),interpolation = cv2.INTER_AREA)
     # get trackbar positions
     lowH = cv2.getTrackbarPos('lowH', 'sliders')
     highH = cv2.getTrackbarPos('highH', 'sliders')
@@ -51,4 +68,4 @@ while True:
         break
 
 cv2.destroyAllWindows()
-#cap.release()
+cap.release()
