@@ -27,7 +27,8 @@ def get_steering_and_throttle(mask):
     left = left if left > threshold else 0
     right = right if right > threshold else 0
     steering = (left / -1000) if left > right else (right / 1000)
-    throttle = 0.15*(1-np.abs(steering)) - 0.05
+    throttle = 0.15*(1-np.abs(steering)) - 0.03
+    throttle = 0 if mask.sum() < threshold else throttle
     return steering, throttle
 
 

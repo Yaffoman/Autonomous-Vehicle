@@ -17,7 +17,7 @@ steering_right = 490
 throttle_ch = 1
 throttle_fwd = 460
 throttle_netural = 380
-throttle_bwd = 240
+throttle_bwd = 300
 
 #Set Up PCA9685 I2C Connetion
 steering_controller = PCA9685(steering_ch, addr, busnum=1)
