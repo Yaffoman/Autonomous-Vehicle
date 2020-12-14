@@ -13,22 +13,24 @@ import cv2
 # car = LineFollower() #generate car class
 bridge = CvBridge() #generate image converter
 
-lower = np.array([32, 73, 50])
-upper = np.array([48, 255, 255])
+lower = np.array([0, 0, 0])
+upper = np.array([20, 255, 255])
 
 
 def get_steering_and_throttle(mask):
-    buf = 10
+    buf = 0
     threshold = 20
     midpt = len(mask[0]) / 2
+    mask = mask[80:,:]
     mask = mask/mask.max()
     left = mask[:, :midpt-buf].sum()
     right = mask[:, buf+midpt:].sum()
+    print left, right
     left = left if left > threshold else 0
     right = right if right > threshold else 0
-    steering = (left / -1000) if left > right else (right / 1000)
-    throttle = 0.15*(1-np.abs(steering)) - 0.03
-    throttle = 0 if mask.sum() < threshold else throttle
+    steering = (left / -1000.) if left > right else (right / 1000.)
+    throttle = 0.1
+#    throttle = 0 if mask.sum() < threshold else throttle
     return steering, throttle
 
 
